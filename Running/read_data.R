@@ -5,14 +5,13 @@ library(reticulate)
 # gpx.data <- read_pickle_file('D:/maps/Running/Data/kg_06142024_gpx.pkl')
 
 pd <- import('pandas')
-gpx.data <- pd$read_pickle('D:/maps/Running/Data/kg_06142024_gpx.pkl')
-fit.data <- pd$read_pickle('D:/maps/Running/Data/kg_06142024_fit.pkl')
+gpx.data <- pd$read_pickle('./kg_06142024_gpx.pkl')
 
 fit.data <- fit.data %>% mutate(Activity = paste0('fit_', Activity))
 
-data <- bind_rows(gpx.data, fit.data)
+data <- gpx.data
 
-rm(pd, fit.data, gpx.data)
+rm(pd, gpx.data)
 gc()
 
 data %>% distinct(Type)

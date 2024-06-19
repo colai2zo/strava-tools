@@ -2,17 +2,17 @@ library(tidyverse)
 library(sf)
 library(nngeo)
 
-data.raw <- readRDS('D:/maps/Running/Data/kg_running_06142024.RDS')
+data.raw <- readRDS('./Data/kg_running_06142024.RDS')
 data <- data %>% na.omit()
 
 sf_use_s2(FALSE)
 
-bexar.bounds <- st_read('D:/maps/Running/bexar/Bexar_County_Boundary.shp') %>%
+bexar.bounds <- st_read('./bexar/Bexar_County_Boundary.shp') %>%
   st_transform(4326)
-cosa.bounds <- st_read('D:/maps/Running/cosa/CosaBoundary.shp') %>%
+cosa.bounds <- st_read('./cosa/CosaBoundary.shp') %>%
   st_transform(4326) %>%
   st_remove_holes()
-cosa.streets <- st_read('D:/maps/Running/cosa/Streets.shp') %>%
+cosa.streets <- st_read('./cosa/Streets.shp') %>%
   st_transform(4326)
 
 strava.all <- data %>%
