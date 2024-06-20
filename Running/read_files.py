@@ -7,7 +7,7 @@ collections.Iterable = collections.abc.Iterable
 import gpxpy
 import gpxpy.gpx
 
-GPXDIR = "./user-data"
+GPXDIR = "./Data/user-data"
 
 
 def read_gpx_files():
@@ -59,7 +59,7 @@ def main():
 		columns = ["Time", "Activity", "Type", "Name", "Latitude", "Longitude", "Elevation"]
 		)
 
-	gpx_df.to_pickle("gpx.pkl")
+	gpx_df.to_pickle("./Data/gpx.pkl")
 
 
 if __name__ == '__main__':

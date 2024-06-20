@@ -73,9 +73,10 @@ def get_club_athletes():
 
 # Return a list of activity links for this athlete
 def get_athlete_activities(profile_url):
-    print(f'Scraping activities for {profile_url}')
+    last_week_url = f'{profile_url}?interval=202424&interval_type=week&chart_type=miles&year_offset=0'
+    print(f'Scraping activities for {last_week_url}')
     try:
-        driver.get(f'{profile_url}#interval?interval=202424&interval_type=week&chart_type=miles&year_offset=0') # Last week's mileage chart
+        driver.get(last_week_url) # Last week's mileage chart
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.feed-ui')))
         activity_links = driver.find_elements(By.CSS_SELECTOR, 'a')
         hrefs = list({link.get_attribute('href') for link in activity_links 

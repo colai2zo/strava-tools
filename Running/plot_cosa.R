@@ -3,7 +3,7 @@ library(sf)
 library(nngeo)
 
 data.raw <- readRDS('./Data/kg_running_06142024.RDS')
-data <- data %>% na.omit()
+data <- data.raw
 
 sf_use_s2(FALSE)
 
@@ -45,10 +45,12 @@ quants <- quantile(pings.binned$n,
                    probs = seq(0, 1, 0.1),
                    na.rm = TRUE)
 
+print(quants)
+print(pings.binned)
 pings.binned <- pings.binned %>%
   mutate(n.quant = as.integer(cut(n, breaks = quants, labels = seq(1, 100, 10))))
 
-ggplot() +
+plot <- ggplot() +
   geom_sf(data = pings.binned,
           aes(fill = n.quant),
           color = 'lightgrey',
@@ -74,5 +76,7 @@ ggplot() +
   guides(fill = guide_colorbar(ticks = FALSE)) +
   annotate('text', x = -98.26, y = 29.705, label = 'Frequency\u2192',
            color = 'black', size = 4, family = 'mono') +
-  annotate('text', x = -98.65, y = 29.12, label = 'San Antonio Running',
+  annotate('text', x = -98.65, y = 29.12, label = 'Countdown Track Club Heatmap',
            color = 'black', size = 8, family = 'mono', fontface = 'bold')
+
+ggsave(filename = "san_antonio_running_plot.png", plot = plot, width = 10, height = 8)
