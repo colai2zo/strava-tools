@@ -75,7 +75,7 @@ def get_club_athletes():
 def get_athlete_activities(profile_url):
     print(f'Scraping activities for {profile_url}')
     try:
-        driver.get(profile_url)
+        driver.get(f'{profile_url}#interval?interval=202424&interval_type=week&chart_type=miles&year_offset=0') # Last week's mileage chart
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.feed-ui')))
         activity_links = driver.find_elements(By.CSS_SELECTOR, 'a')
         hrefs = list({link.get_attribute('href') for link in activity_links 
@@ -91,14 +91,12 @@ def main():
 
     login_to_strava()
     athlete_links = get_club_athletes()
-    with open('activity_links.txt', 'w') as link_file:
+    with open('./Data/activity_links.txt', 'w') as link_file:
         for link in athlete_links:
             activity_links = get_athlete_activities(link)
             for link in activity_links:
                 print(f'Writing {link} to link file')
                 link_file.write(f'{link}\n')
-
-
 
     # Close the browser
     driver.quit()
